@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rome — Aerospace Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ── RESET & BASE ─────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy:       #060F1E;
+    --dark-blue:  #0A2444;
+    --blue:       #1D4ED8;
+    --sky:        #60A5FA;
+    --pale:       #EFF6FF;
+    --white:      #FFFFFF;
+    --muted:      #94A3B8;
+    --border:     rgba(96,165,250,0.15);
+    --glow:       rgba(29,78,216,0.25);
+
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body:    'Inter', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--white);
+    color: var(--navy);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ── SCROLLBAR ────────────────────────────────────────────── */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--navy); }
+  ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 3px; }
+
+  /* ── NAV ──────────────────────────────────────────────────── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(6,15,30,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    transition: padding 0.3s ease;
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--white);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--sky); }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    transition: color 0.2s;
+    text-transform: uppercase;
+  }
+
+  .nav-links a:hover { color: var(--sky); }
+
+  /* ── HERO ─────────────────────────────────────────────────── */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    perspective: 1200px;
+  }
+
+  /* star field */
+  .stars {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--white);
+    opacity: 0;
+    animation: twinkle var(--dur, 3s) var(--delay, 0s) infinite ease-in-out;
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0.8); }
+    50% { opacity: var(--op, 0.6); transform: scale(1); }
+  }
+
+  /* orbital ring — signature element */
+  .orbital-ring {
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%) rotateX(60deg) rotateY(-15deg);
+    width: 1200px;
+    height: 800px;
+    transform-style: preserve-3d;
+    z-index: 3;
+  }
+
+  .ring-ellipse {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(96,165,250,0.1);
+    box-shadow: 0 0 40px rgba(29,78,216,0.03) inset;
+  }
+
+  /* satellite dot traveling the orbit */
+  .satellite-dot {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    margin-left: -7px;
+    margin-top: -7px;
+    border-radius: 50%;
+    background: var(--sky);
+    box-shadow: 0 0 25px 10px rgba(96,165,250,0.6);
+    transform-origin: 7px 400px;
+    animation: orbit 15s linear infinite;
+  }
+
+  @keyframes orbit {
+    from { transform: rotate(0deg) translateX(0) translateY(0); }
+    to   { transform: rotate(360deg) translateX(0) translateY(0); }
+  }
+
+  /* hero content */
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    padding: 0 4rem;
+    transform-style: preserve-3d;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--sky);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .hero-label::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--sky);
+  }
+
+  .hero-label::after {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--sky);
+  }
+
+  .hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 700;
+    line-height: 1.0;
+    color: var(--white);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 30px rgba(6,15,30,0.8), 0 0 60px rgba(6,15,30,0.6);
+  }
+
+  .hero-name .gradient-text {
+    background: linear-gradient(135deg, var(--sky) 0%, var(--white) 60%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    font-weight: 400;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    letter-spacing: 0.01em;
+    text-shadow: 0 0 20px rgba(6,15,30,0.6);
+  }
+
+  .hero-title strong {
+    color: rgba(255,255,255,0.75);
+    font-weight: 500;
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+    color: rgba(148,163,184,0.85);
+    max-width: 550px;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.85rem 2rem;
+    background: var(--blue);
+    color: var(--white);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border-radius: 6px;
+    letter-spacing: 0.02em;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 30px rgba(29,78,216,0.4);
+  }
+
+  .hero-cta:hover {
+    background: #1e40af;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(29,78,216,0.5);
+  }
+
+  .hero-cta svg { width: 16px; height: 16px; }
+
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--muted), transparent);
+    animation: scroll-pulse 1.8s ease-in-out infinite;
+  }
+
+  @keyframes scroll-pulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+
+  /* ── SECTION SHARED ───────────────────────────────────────── */
+  section { padding: 6rem 4rem; }
+
+  .section-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--blue);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-eyebrow::after {
+    content: '';
+    display: block;
+    flex: 1;
+    max-width: 40px;
+    height: 1px;
+    background: var(--blue);
+    opacity: 0.5;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+    color: #64748B;
+    max-width: 520px;
+    line-height: 1.7;
+  }
+
+  .max-container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ── ABOUT ────────────────────────────────────────────────── */
+  #about {
+    background: var(--white);
+    border-bottom: 1px solid #E2E8F0;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 4rem;
+    align-items: start;
+    margin-top: 3rem;
+  }
+
+  .about-photo {
+    position: sticky;
+    top: 2rem;
+    aspect-ratio: 3/4;
+  }
+
+  .about-photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+
+  .about-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .about-text p {
+    font-size: 1rem;
+    color: #334155;
+    line-height: 1.8;
+    margin-bottom: 0;
+  }
+
+  .info-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .info-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .info-card {
+    padding: 1.25rem;
+    background: var(--pale);
+    border: 1px solid #DBEAFE;
+    border-radius: 10px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .info-card:hover {
+    border-color: var(--sky);
+    box-shadow: 0 4px 20px rgba(96,165,250,0.12);
+  }
+
+  .info-card-title {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.85rem;
+    letter-spacing: -0.01em;
+  }
+
+  .info-card-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .info-tag {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: #475569;
+    padding: 0.3rem 0.65rem;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 3px;
+    letter-spacing: 0.02em;
+  }
+
+  .skill-category {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-top: 1.25rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .skill-category:first-child {
+    margin-top: 0;
+  }
+
+  .skill-with-category {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .category-label {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--blue);
+    background: var(--pale);
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* ── PROJECTS ─────────────────────────────────────────────── */
+  #projects {
+    background: var(--pale);
+  }
+
+  .projects-header {
+    margin-bottom: 3rem;
+  }
+
+  /* featured card — ASTRA Kit */
+  .project-featured {
+    background: var(--navy);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    min-height: 340px;
+    border: 1px solid rgba(96,165,250,0.15);
+    box-shadow: 0 20px 60px rgba(6,15,30,0.2);
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+
+  .project-featured:hover {
+    box-shadow: 0 30px 80px rgba(6,15,30,0.35);
+    transform: translateY(-3px);
+  }
+
+  .project-featured-content {
+    padding: 3rem 3.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .project-badge {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--sky);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid rgba(96,165,250,0.25);
+    border-radius: 100px;
+    width: fit-content;
+  }
+
+  .badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--sky);
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  .project-featured-title {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .project-featured-title span { color: var(--sky); }
+
+  .project-featured-desc {
+    font-size: 0.95rem;
+    color: rgba(148,163,184,0.9);
+    line-height: 1.75;
+    margin-bottom: 2rem;
+    max-width: 480px;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+    padding: 0.3rem 0.7rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+  }
+
+  .tag.highlight {
+    color: var(--sky);
+    border-color: rgba(96,165,250,0.25);
+    background: rgba(96,165,250,0.05);
+  }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--sky);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: gap 0.2s;
+  }
+
+  .project-link:hover { gap: 0.75rem; }
+  .project-link svg { width: 14px; height: 14px; }
+
+  /* featured visual panel */
+  .project-featured-visual {
+    background: linear-gradient(135deg, #0A2444 0%, #1D4ED8 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cubesat-diagram {
+    position: relative;
+    width: 160px;
+    height: 160px;
+  }
+
+  .cube-face {
+    position: absolute;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.04);
+    border-radius: 4px;
+  }
+
+  .cube-front {
+    width: 100px;
+    height: 100px;
+    top: 30px;
+    left: 30px;
+    background: rgba(29,78,216,0.3);
+    border-color: rgba(96,165,250,0.5);
+  }
+
+  .cube-top {
+    width: 100px;
+    height: 30px;
+    top: 5px;
+    left: 42px;
+    transform: skewX(-45deg);
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(96,165,250,0.3);
+  }
+
+  .cube-side {
+    width: 30px;
+    height: 100px;
+    top: 30px;
+    left: 125px;
+    transform: skewY(-45deg);
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(96,165,250,0.2);
+  }
+
+  .cube-label {
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: rgba(96,165,250,0.8);
+    letter-spacing: 0.12em;
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+
+  /* subsystem dots on cube */
+  .subsystem-dots {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    width: 80px;
+    top: 45px;
+    left: 40px;
+    height: 80px;
+  }
+
+  .ss-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    animation: ss-blink 2s var(--d, 0s) infinite ease-in-out;
+  }
+
+  @keyframes ss-blink {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  .visual-label-group {
+    position: absolute;
+    bottom: 2rem;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 0 1rem;
+  }
+
+  .visual-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .visual-label strong {
+    display: block;
+    color: rgba(96,165,250,0.8);
+    margin-bottom: 2px;
+  }
+
+  /* project grid — 3 cards in a row, more room than the old 6-up grid */
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+
+  .project-card {
+    background: var(--white);
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 2.25rem;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--sky));
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .project-card:hover {
+    border-color: #BFDBFE;
+    box-shadow: 0 12px 40px rgba(29,78,216,0.12);
+    transform: translateY(-3px);
+  }
+
+  .project-card:hover::before { opacity: 1; }
+
+  .card-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    background: var(--pale);
+    border: 1px solid #DBEAFE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .card-body { min-width: 0; display: flex; flex-direction: column; flex: 1; }
+
+  .card-category {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--navy);
+    letter-spacing: -0.01em;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .card-desc {
+    font-size: 0.9rem;
+    color: #64748B;
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+    flex: 1;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .card-tag {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: #64748B;
+    padding: 0.2rem 0.55rem;
+    background: #F1F5F9;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+  }
+
+  .card-gallery-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.82rem;
+    color: var(--blue);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    padding: 0.65rem 1.1rem;
+    border: 1px solid #DBEAFE;
+    border-radius: 100px;
+    transition: gap 0.2s, background 0.2s, border-color 0.2s;
+    width: fit-content;
+    margin-top: auto;
+  }
+
+  .card-gallery-link:hover {
+    gap: 0.6rem;
+    background: var(--pale);
+    border-color: #BFDBFE;
+  }
+
+  .card-gallery-link svg { width: 13px; height: 13px; }
+
+  .card-gallery-link.disabled {
+    color: var(--muted);
+    border-color: #E2E8F0;
+    pointer-events: none;
+  }
+
+  /* ── SKILLS ───────────────────────────────────────────────── */
+  #skills {
+    background: var(--white);
+    border-top: 1px solid #E2E8F0;
+    border-bottom: 1px solid #E2E8F0;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .skill-group h4 {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 2px solid var(--pale);
+  }
+
+  .skill-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .skill-list li {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    letter-spacing: 0.02em;
+  }
+
+  .skill-list li::before {
+    content: '';
+    display: block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--sky);
+    flex-shrink: 0;
+  }
+
+  /* ── CONTACT ──────────────────────────────────────────────── */
+  #contact {
+    background: var(--navy);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #contact::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(29,78,216,0.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .contact-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--sky);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .contact-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 1.25rem;
+  }
+
+  .contact-title span {
+    background: linear-gradient(135deg, var(--sky), var(--white));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .contact-desc {
+    font-size: 1rem;
+    color: rgba(148,163,184,0.85);
+    max-width: 460px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.75;
+  }
+
+  .contact-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.75rem;
+    border-radius: 6px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.88rem;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: all 0.2s;
+  }
+
+  .contact-btn.primary {
+    background: var(--blue);
+    color: var(--white);
+    box-shadow: 0 0 30px rgba(29,78,216,0.35);
+  }
+
+  .contact-btn.primary:hover {
+    background: #1e40af;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(29,78,216,0.5);
+  }
+
+  .contact-btn.secondary {
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.8);
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+
+  .contact-btn.secondary:hover {
+    background: rgba(255,255,255,0.1);
+    color: var(--white);
+    transform: translateY(-2px);
+  }
+
+  .contact-btn svg { width: 16px; height: 16px; }
+
+  /* ── FOOTER ───────────────────────────────────────────────── */
+  footer {
+    background: #03080F;
+    padding: 1.5rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .footer-copy {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: rgba(148,163,184,0.5);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-copy span { color: rgba(96,165,250,0.6); }
+
+  .footer-institution {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: rgba(148,163,184,0.35);
+    letter-spacing: 0.05em;
+    text-align: right;
+  }
+
+  /* ── REVEAL ANIMATIONS ────────────────────────────────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ── RESPONSIVE ───────────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .project-grid { grid-template-columns: repeat(2, 1fr); }
+    .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    .project-featured { grid-template-columns: 1fr; }
+    .project-featured-visual { min-height: 220px; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .about-photo { position: static; max-width: 300px; margin: 0 auto; aspect-ratio: 3/4; }
+    .orbital-ring { width: 1000px; height: 680px; }
+    .satellite-dot { transform-origin: 7px 340px !important; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero-content { padding: 0 1.5rem; }
+    .project-grid { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.5rem; }
+    .footer-institution { text-align: center; }
+    .orbital-ring { width: 550px; height: 380px; opacity: 0.4; }
+    .satellite-dot { transform-origin: 7px 190px !important; width: 12px; height: 12px; margin-left: -6px; margin-top: -6px; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .about-photo { position: static; max-width: 280px; margin: 0 auto; aspect-ratio: 3/4; }
+    .info-cards-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    .orbital-ring { width: 450px; height: 300px; opacity: 0.3; }
+    .satellite-dot { transform-origin: 7px 150px !important; width: 10px; height: 10px; margin-left: -5px; margin-top: -5px; }
+    .about-photo { max-width: 240px; aspect-ratio: 3/4; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ── NAVIGATION ─────────────────────────────────────────────── -->
+<nav>
+  <a href="#hero" class="nav-logo">R<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ───────────────────────────────────────────────────── -->
+<section id="hero">
+  <!-- star field -->
+  <div class="stars" id="starfield"></div>
+
+  <!-- orbital ring — signature element -->
+  <div class="orbital-ring">
+    <div class="ring-ellipse"></div>
+    <div class="satellite-dot"></div>
+  </div>
+
+  <!-- hero text -->
+  <div class="hero-content">
+    <p class="hero-label">Aerospace Engineering Portfolio</p>
+    <h1 class="hero-name">
+      <span class="gradient-text">Jerome Pangilinan</span>
+    </h1>
+    <p class="hero-title">
+      <strong>Aerospace Engineer</strong> — Systems Design &amp; Spacecraft Technology
+    </p>
+    <p class="hero-desc">
+      Aerospace Engineering Graduate from Batangas State University, specializing in aerospace systems, aircraft familiarization, prototyping, and digital fabrication. Builder of the ASTRA Kit — a modular CubeSatellite training platform.
+    </p>
+    <a href="#projects" class="hero-cta">
+      View Projects
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- ── ABOUT ──────────────────────────────────────────────────── -->
+<section id="about">
+  <div class="max-container">
+    <p class="section-eyebrow">About</p>
+    <h2 class="section-title">About Me</h2>
+
+    <div class="about-grid">
+      <div class="about-photo reveal">
+        <img src="DSCF7125-Edit copy.jpg" alt="Jerome Pangilinan" class="about-photo-img">
+      </div>
+
+      <div class="about-content reveal reveal-delay-1">
+        <div class="about-text">
+          <p>
+            Hi! I'm an Aerospace Engineering graduate with a strong interest in mechanical design and engineering development. My experience includes 3D CAD modeling, engineering analysis, FEA simulation, and the development of aerospace and mechanical design projects. I enjoy turning technical requirements and real-world dimensions into practical, detailed models and using engineering analysis to evaluate and improve designs. While my background is in aerospace, my skills are applicable to broader mechanical design, product development, and engineering support roles.
+          </p>
+        </div>
+
+        <div class="info-cards">
+          <div class="info-cards-grid">
+            <div class="info-card">
+              <h4 class="info-card-title">Education</h4>
+              <div class="info-card-content">
+                <p style="margin: 0; font-size: 0.85rem; color: #334155;">
+                  <strong>BS Aerospace Engineering</strong><br>
+                  Batangas State University
+                </p>
+              </div>
+            </div>
+
+            <div class="info-card">
+              <h4 class="info-card-title">Focus</h4>
+              <div class="info-card-content">
+                <p style="margin: 0; font-size: 0.85rem; color: #334155;">
+                  Aerospace • Design & Development • Simulation • Engineering Analysis • Technical Research
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROJECTS ────────────────────────────────────────────────── -->
+<section id="projects">
+  <div class="max-container">
+    <div class="projects-header">
+      <p class="section-eyebrow">Projects</p>
+      <h2 class="section-title">Engineering work</h2>
+      <p class="section-subtitle">A selection of academic and personal projects across spacecraft systems, mechanical design, and embedded engineering.</p>
+    </div>
+
+    <!-- featured: ASTRA Kit -->
+    <div class="project-featured reveal">
+      <div class="project-featured-content">
+        <div>
+          <div class="project-badge">
+            <div class="badge-dot"></div>
+            Capstone — AEE25-010
+          </div>
+          <h3 class="project-featured-title">ASTRA <span>Kit</span></h3>
+          <p class="project-featured-desc">
+            A modular 1U CubeSatellite training platform built from COTS components. Five subsystems — Structural, EPS, C&DHS, Communication, and Payload — interconnected through a custom backplane board. Hybrid LoRa uplink and WiFi downlink architecture with a web-based ground station dashboard. Total development cost: PhP 5,876.08.
+          </p>
+          <div class="project-tags">
+            <span class="tag highlight">CubeSat</span>
+            <span class="tag highlight">ESP32</span>
+            <span class="tag highlight">LoRa SX1278</span>
+            <span class="tag">EasyEDA</span>
+            <span class="tag">SolidWorks</span>
+            <span class="tag">Arduino</span>
+            <span class="tag">PCB Design</span>
+            <span class="tag">Systems Integration</span>
+          </div>
+        </div>
+        <a href="#" class="project-link">
+          View Documentation
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="project-featured-visual">
+        <img src="ASTRA Kit Card Image.png" alt="ASTRA Kit fully assembled CubeSat" style="width: 100%; height: 100%; object-fit: cover;">
+      </div>
+    </div>
+
+    <!-- project stack -->
+    <div class="project-grid">
+      <div class="project-card reveal">
+        <div class="card-icon">🛰️</div>
+        <div class="card-body">
+          <p class="card-category">CAD · PCB · Web Dashboard</p>
+          <h3 class="card-title">ASTRA Kit — Full Systems Build</h3>
+          <p class="card-desc">End-to-end hardware and software development for the ASTRA Kit: the 3D-modeled drawer-based chassis and structural panels in SolidWorks, the custom two-layer EasyEDA backplane board handling power and SPI routing, and the browser-based ground station dashboard for real-time telemetry, LoRa command issuance, and image retrieval.</p>
+          <div class="card-tags">
+            <span class="card-tag">SolidWorks</span>
+            <span class="card-tag">EasyEDA</span>
+            <span class="card-tag">ESP32 / LoRa</span>
+            <span class="card-tag">HTML/CSS/JS</span>
+          </div>
+        </div>
+        <a href="astra-gallery.html" class="card-gallery-link">
+          View Gallery
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="project-card reveal reveal-delay-1">
+        <div class="card-icon">✈️</div>
+        <div class="card-body">
+          <p class="card-category">Aerospace Design</p>
+          <h3 class="card-title">Boeing 777 Fuselage Design</h3>
+          <p class="card-desc">[PLACEHOLDER — send over the project brief and I'll write this properly. For now: what was the scope — a full structural CAD model, a specific fuselage section/frame analysis, a coursework exercise? What tools and what was the deliverable?]</p>
+          <div class="card-tags">
+            <span class="card-tag">SolidWorks</span>
+            <span class="card-tag">Fuselage Structures</span>
+          </div>
+        </div>
+        <a href="boeing-777-gallery.html" class="card-gallery-link">
+          View Gallery
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="project-card reveal reveal-delay-2">
+        <div class="card-icon">🎛️</div>
+        <div class="card-body">
+          <p class="card-category">Coming Soon</p>
+          <h3 class="card-title">Third Project — TBD</h3>
+          <p class="card-desc">A third featured project slot, reserved. Swap this in once it's decided — candidates from the existing coursework include control systems design (PID / root locus / Bode analysis) or the ADCS work from Project ALON.</p>
+          <div class="card-tags">
+            <span class="card-tag">In Progress</span>
+          </div>
+        </div>
+        <span class="card-gallery-link disabled">
+          View Gallery
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SKILLS ──────────────────────────────────────────────────── -->
+<section id="skills">
+  <div class="max-container">
+    <p class="section-eyebrow">Skills</p>
+    <h2 class="section-title">Technical Toolkit</h2>
+
+    <div class="skills-grid">
+      <div class="skill-group reveal">
+        <h4>Design &amp; CAD</h4>
+        <ul class="skill-list">
+          <li>SolidWorks</li>
+          <li>3D Parametric Modeling</li>
+          <li>Aerospace Component Design</li>
+          <li>Engineering Drawings &amp; CAD Documentation</li>
+          <li>GD&amp;T Fundamentals</li>
+        </ul>
+      </div>
+
+      <div class="skill-group reveal reveal-delay-1">
+        <h4>Analysis &amp; Simulation</h4>
+        <ul class="skill-list">
+          <li>Finite Element Analysis (FEA)</li>
+          <li>SolidWorks Simulation</li>
+          <li>Structural Stress Analysis</li>
+          <li>Deflection &amp; Load Analysis</li>
+          <li>Engineering Modeling</li>
+        </ul>
+      </div>
+
+      <div class="skill-group reveal reveal-delay-2">
+        <h4>Aerospace Engineering</h4>
+        <ul class="skill-list">
+          <li>CubeSat Systems and  Operations</li>
+          <li>Aircraft 3D Modeling</li>
+          <li>Aerospace Structures</li>
+          <li>Aerodynamics Fundamentals</li>
+          <li>Engineering Design &amp; Analysis</li>
+        </ul>
+      </div>
+
+      <div class="skill-group reveal reveal-delay-3">
+        <h4>Engineering Practice</h4>
+        <ul class="skill-list">
+          <li>Technical Documentation</li>
+          <li>Engineering Research</li>
+          <li>Literature Review &amp; Technical Writing</li>
+          <li>Technical Presentations</li>
+          <li>Systems-Level Thinking</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ─────────────────────────────────────────────────── -->
+<section id="contact">
+  <div class="max-container" style="position:relative;z-index:1;">
+    <p class="contact-eyebrow">Contact</p>
+    <h2 class="contact-title">Let's build something<br><span>worth launching.</span></h2>
+    <p class="contact-desc">
+      Open to collaborations, research opportunities, and conversations about aerospace systems, satellite technology, and embedded engineering.
+    </p>
+    <div class="contact-links">
+      <a href="pnglnnjerome@gmail.com" class="contact-btn primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Send an Email
+      </a>
+      <a href="https://linkedin.com" target="_blank" class="contact-btn secondary">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com" target="_blank" class="contact-btn secondary">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ──────────────────────────────────────────────────── -->
+<footer>
+  <p class="footer-copy">
+    &copy; 2026 <span>Rome</span> — Aerospace Engineer
+  </p>
+  <p class="footer-institution">
+    Batangas State University — TNEU<br>
+    Bachelor of Science in Aerospace Engineering
+  </p>
+</footer>
+
+<script>
+  // ── STAR FIELD ───────────────────────────────────────────────
+  const starfield = document.getElementById('starfield');
+  const starCount = 120;
+  for (let i = 0; i < starCount; i++) {
+    const star = document.createElement('div');
+    star.classList.add('star');
+    const size = Math.random() * 2.5 + 0.5;
+    star.style.cssText = `
+      width: ${size}px;
+      height: ${size}px;
+      top: ${Math.random() * 100}%;
+      left: ${Math.random() * 100}%;
+      --dur: ${Math.random() * 4 + 2}s;
+      --delay: ${Math.random() * 5}s;
+      --op: ${Math.random() * 0.5 + 0.2};
+    `;
+    starfield.appendChild(star);
+  }
+
+  // ── SCROLL REVEAL ────────────────────────────────────────────
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  revealEls.forEach(el => observer.observe(el));
+
+  // ── NAV SCROLL EFFECT ────────────────────────────────────────
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.style.padding = '0.8rem 4rem';
+    } else {
+      nav.style.padding = '1.2rem 4rem';
+    }
+  });
+
+  // ── ACTIVE NAV LINK ──────────────────────────────────────────
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.style.color = link.getAttribute('href') === '#' + entry.target.id
+            ? 'var(--sky)' : '';
+        });
+      }
+    });
+  }, { threshold: 0.5 });
+
+  sections.forEach(s => sectionObserver.observe(s));
+</script>
+
+</body>
+</html>
