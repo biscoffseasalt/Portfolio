@@ -378,10 +378,12 @@
   }
 
   .about-text p {
-    font-size: 1rem;
-    color: #334155;
-    line-height: 1.8;
-    margin-bottom: 0;
+  font-size: 1rem;
+  color: #334155;
+  line-height: 1.8;
+  margin-bottom: 0;
+  text-align: justify;
+  text-justify: inter-word;
   }
 
   .info-cards {
@@ -750,17 +752,23 @@
 
   .project-card:hover::before { opacity: 1; }
 
-  .card-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 14px;
-    background: var(--pale);
-    border: 1px solid #DBEAFE;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.6rem;
-    margin-bottom: 1.5rem;
+  .project-card::before { z-index: 2; }  /* keep the hover accent line above the header image */
+
+  .card-image {
+    margin: -2.25rem -2.25rem 1.5rem -2.25rem; /* bleeds to the card's edges, clipped by the card's rounded corners + overflow:hidden */
+    height: 170px;
+    background-color: var(--pale);
+    background-image: linear-gradient(135deg, #EFF6FF, #DBEAFE); /* fallback look if no image is set yet */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+
+  .card-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 40%, var(--white) 100%);
   }
 
   .card-body { min-width: 0; display: flex; flex-direction: column; flex: 1; }
@@ -985,7 +993,6 @@
   .contact-btn.secondary {
     background: rgba(255,255,255,0.06);
     color: rgba(255,255,255,0.8);
-    border: 1px solid rgba(255,255,255,0.12);
   }
 
   .contact-btn.secondary:hover {
@@ -994,7 +1001,42 @@
     transform: translateY(-2px);
   }
 
-  .contact-btn svg { width: 16px; height: 16px; }
+  .contact-btn svg { width: 16px; height: 33px; }
+
+  button.contact-btn {
+  appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+button.contact-btn:focus-visible {
+  outline: 2px solid var(--sky);
+  outline-offset: 2px;
+}
+
+button.contact-btn {
+  appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: inherit;
+  box-sizing: border-box;
+  line-height: normal;
+}
+
+button.contact-btn::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+button.contact-btn:focus-visible {
+  outline: 2px solid var(--sky);
+  outline-offset: 2px;
+}
 
   /* ── FOOTER ───────────────────────────────────────────────── */
   footer {
@@ -1137,7 +1179,7 @@
       <div class="about-content reveal reveal-delay-1">
         <div class="about-text">
           <p>
-            Hi! I'm an Aerospace Engineering graduate with a strong interest in mechanical design and engineering development. My experience includes 3D CAD modeling, engineering analysis, FEA simulation, and the development of aerospace and mechanical design projects. I enjoy turning technical requirements and real-world dimensions into practical, detailed models and using engineering analysis to evaluate and improve designs. While my background is in aerospace, my skills are applicable to broader mechanical design, product development, and engineering support roles.
+            Hi! I'm an Aerospace Engineering graduate focused on mechanical design, engineering development, and hands-on prototyping. I work with 3D CAD, engineering analysis, FEA simulation, and digital fabrication to turn technical requirements and real-world dimensions into practical, detailed designs. My projects range from aerospace systems and CubeSat development to mechanical modeling and physical prototyping, giving me experience across both digital design and real-world implementation. I’m particularly interested in opportunities where I can apply this combination of engineering fundamentals, CAD, analysis, and problem-solving to mechanical design, product development, and engineering support.
           </p>
         </div>
 
@@ -1187,7 +1229,10 @@
           </div>
           <h3 class="project-featured-title">ASTRA <span>Kit</span></h3>
           <p class="project-featured-desc">
-            A modular 1U CubeSatellite training platform built from COTS components. Five subsystems — Structural, EPS, C&DHS, Communication, and Payload — interconnected through a custom backplane board. Hybrid LoRa uplink and WiFi downlink architecture with a web-based ground station dashboard. Total development cost: PhP 5,876.08.
+            A low-cost, modular <strong>1U CubeSat training platform</strong> built from COTS components and interconnected through a custom backplane board. ASTRA Kit integrates five spacecraft subsystems (Structural, EPS, C&DHS, Communication, and Payload) with a <strong>hybrid LoRa/WiFi communication architecture</strong> and web-based ground station for real-time monitoring and payload data visualization.
+          </p>
+          <p class="project-featured-desc" style="margin-top: 1rem;">
+            <strong>Unit Development Cost:</strong> ₱5,876.08
           </p>
           <div class="project-tags">
             <span class="tag highlight">CubeSat</span>
@@ -1214,7 +1259,7 @@
     <!-- project stack -->
     <div class="project-grid">
       <div class="project-card reveal">
-        <div class="card-icon">🛰️</div>
+        <div class="card-image" style="background-image: url('ASTRA Kit Card Image.png');"></div>
         <div class="card-body">
           <p class="card-category">CAD · PCB · Web Dashboard</p>
           <h3 class="card-title">ASTRA Kit — Full Systems Build</h3>
@@ -1233,7 +1278,7 @@
       </div>
 
       <div class="project-card reveal reveal-delay-1">
-        <div class="card-icon">✈️</div>
+        <div class="card-image" style="background-image: url('Fuselage ISO VIEW.png');"></div>
         <div class="card-body">
           <p class="card-category">Aerospace Design</p>
           <h3 class="card-title">Boeing 777 Fuselage Design</h3>
@@ -1250,7 +1295,7 @@
       </div>
 
       <div class="project-card reveal reveal-delay-2">
-        <div class="card-icon">🎛️</div>
+        <div class="card-image"></div>
         <div class="card-body">
           <p class="card-category">Coming Soon</p>
           <h3 class="card-title">Third Project — TBD</h3>
@@ -1331,17 +1376,14 @@
       Open to collaborations, research opportunities, and conversations about aerospace systems, satellite technology, and embedded engineering.
     </p>
     <div class="contact-links">
-      <a href="pnglnnjerome@gmail.com" class="contact-btn primary">
+        <button class="contact-btn primary" onclick="copyEmail(this)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        Send an Email
+        <span class="btn-label">pnglnnjerome@gmail.com</span>
+      </button>
       </a>
-      <a href="https://linkedin.com" target="_blank" class="contact-btn secondary">
+      <a href="https://www.linkedin.com/in/jerome-jay-pangilinan-486054373" target="_blank" rel="noopener" class="contact-btn secondary">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
         LinkedIn
-      </a>
-      <a href="https://github.com" target="_blank" class="contact-btn secondary">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
-        GitHub
       </a>
     </div>
   </div>
@@ -1359,6 +1401,16 @@
 </footer>
 
 <script>
+    function copyEmail(btn) {
+    const email = 'pnglnnjerome@gmail.com';
+    navigator.clipboard.writeText(email).then(() => {
+      const label = btn.querySelector('.btn-label');
+      const original = label.textContent;
+      label.textContent = 'Copied!';
+      setTimeout(() => { label.textContent = original; }, 1800);
+    });
+  }
+
   // ── STAR FIELD ───────────────────────────────────────────────
   const starfield = document.getElementById('starfield');
   const starCount = 120;
