@@ -148,6 +148,25 @@
   footer { padding: 2.5rem 4rem; text-align: center; }
   .footer-copy { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
 
+  /* ── REVEAL ANIMATIONS ────────────────────────────────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* stagger items within the grid so they don't all pop in at once */
+  .gallery-item:nth-child(1) { transition-delay: 0s; }
+  .gallery-item:nth-child(2) { transition-delay: 0.08s; }
+  .gallery-item:nth-child(3) { transition-delay: 0.16s; }
+  .gallery-item:nth-child(4) { transition-delay: 0.24s; }
+  .gallery-item:nth-child(5) { transition-delay: 0.32s; }
+
   @media (max-width: 768px) {
     nav, header.gallery-hero, main, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
   }
@@ -173,23 +192,23 @@
 
 <main>
   <div class="gallery-grid">
-    <div class="gallery-item filled">
+    <div class="gallery-item filled reveal">
       <img src="Fuselage ISO VIEW.png" alt="Boeing 777 fuselage isometric CAD view">
       <div class="image-label">Fuselage ISO VIEW.png</div>
     </div>
-    <div class="gallery-item filled">
+    <div class="gallery-item filled reveal">
       <img src="Fuselage ORTHO VIEWS.png" alt="Boeing 777 fuselage orthographic views">
       <div class="image-label">Fuselage ORTHO VIEWS.png</div>
     </div>
-    <div class="gallery-item filled">
-  <img src="Fuselage ORTHO VIEWS 1.png" alt="Boeing 777 fuselage orthographic views, additional angle">
-  <div class="image-label">Fuselage ORTHO VIEWS 1.png</div>
-</div>
-    <div class="gallery-item filled">
+    <div class="gallery-item filled reveal">
+      <img src="Fuselage ORTHO VIEWS 1.png" alt="Boeing 777 fuselage orthographic views, additional angle">
+      <div class="image-label">Fuselage ORTHO VIEWS 1.png</div>
+    </div>
+    <div class="gallery-item filled reveal">
       <img src="FEA Analysis FUSELAGE 1.png" alt="Finite Element Analysis — fuselage stress distribution">
       <div class="image-label">FEA Analysis FUSELAGE 1.png</div>
     </div>
-    <div class="gallery-item filled">
+    <div class="gallery-item filled reveal">
       <img src="FEA ANALYSIS FUSELAGE 2.png" alt="Finite Element Analysis — fuselage deformation analysis">
       <div class="image-label">FEA ANALYSIS FUSELAGE 2.png</div>
     </div>
@@ -240,6 +259,19 @@
       closeLightbox();
     }
   });
+
+  // ── SCROLL REVEAL ────────────────────────────────────────────
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  revealEls.forEach(el => revealObserver.observe(el));
 </script>
 
 </body>

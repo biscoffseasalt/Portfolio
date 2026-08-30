@@ -106,7 +106,7 @@
 
   /* Category sections */
   .gallery-section {
-    margin-bottom: 3rem;
+    margin-bottom: 4.5rem;
   }
 
   .gallery-section:last-child {
@@ -118,6 +118,7 @@
     font-size: 1.1rem;
     font-weight: 600;
     color: var(--navy);
+    margin-top: 0.5rem;
     margin-bottom: 1.5rem;
     padding-bottom: 0.5rem;
     border-bottom: 2px solid var(--pale);
@@ -177,6 +178,25 @@
   footer { padding: 2.5rem 4rem; text-align: center; }
   .footer-copy { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
 
+  /* ── REVEAL ANIMATIONS ────────────────────────────────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* stagger items within a grid so they don't all pop in at once */
+  .gallery-item:nth-child(1) { transition-delay: 0s; }
+  .gallery-item:nth-child(2) { transition-delay: 0.08s; }
+  .gallery-item:nth-child(3) { transition-delay: 0.16s; }
+  .gallery-item:nth-child(4) { transition-delay: 0.24s; }
+  .gallery-item:nth-child(5) { transition-delay: 0.32s; }
+
   @media (max-width: 768px) {
     nav, header.gallery-hero, main, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
   }
@@ -204,26 +224,26 @@
   <div class="max-container">
     <!-- Structure Design Section -->
     <div class="gallery-section">
-      <h3 class="category-header">Structure Design</h3>
-      <p class="category-description">CAD design iterations from initial concept to final fabrication. The drawer-based chassis system allows modular subsystem integration.</p>
+      <h3 class="category-header reveal">Structure Design</h3>
+      <p class="category-description reveal">CAD design iterations from initial concept to final fabrication. The drawer-based chassis system allows modular subsystem integration.</p>
       <div class="gallery-grid">
-        <div class="gallery-item filled">
+        <div class="gallery-item filled reveal">
           <img src="ASTRA Design Iteration 1.png" alt="Early ASTRA Kit design iteration">
           <div class="image-label">ASTRA Design Iteration 1.png</div>
         </div>
-        <div class="gallery-item filled">
+        <div class="gallery-item filled reveal">
           <img src="ASTRA 2.png" alt="ASTRA Kit chassis CAD render — assembled isometric view">
           <div class="image-label">ASTRA FINAL 1.png</div>
         </div>
-        <div class="gallery-item filled">
+        <div class="gallery-item filled reveal">
           <img src="ASTRA 1.png" alt="ASTRA Kit chassis CAD render — drawer assembly, exploded view">
           <div class="image-label">ASTRA FINAL 2.png</div>
         </div>
-        <div class="gallery-item filled">
+        <div class="gallery-item filled reveal">
           <img src="ASTRA DRAWER DESIGN.png" alt="Fabricated ASTRA Kit drawer system, open, showing PCBs and battery">
           <div class="image-label">ASTRA DRAWER DESIGN.png</div>
         </div>
-        <div class="gallery-item filled">
+        <div class="gallery-item filled reveal">
           <img src="ASTRA FULLY ASSEMBLED.PNG" alt="Fully assembled ASTRA Kit CubeSat with solar panels">
           <div class="image-label">ASTRA FULLY ASSEMBLED.PNG</div>
         </div>
@@ -232,81 +252,85 @@
 
     <!-- PCB Design Section -->
     <div class="gallery-section">
-      <h3 class="category-header">PCB Design</h3>
-      <p class="category-description">Custom backplane board design handling power distribution and SPI communication between subsystems.</p>
+      <h3 class="category-header reveal">PCB Design</h3>
+      <p class="category-description reveal">Custom backplane board design handling power distribution and SPI communication between subsystems.</p>
       <div class="gallery-grid">
-      <div class="gallery-item filled">
-        <img src="COMMS PCC LAYOUT.png" alt="ASTRA Kit communications PCB layout">
-        <div class="image-label">COMMS PCC LAYOUT.png</div>
-      </div>
-      <div class="gallery-item filled">
-        <img src="OBC PCB LAYOUT.png" alt="ASTRA Kit onboard computer PCB layout">
-        <div class="image-label">OBC PCB LAYOUT.png</div>
-      </div>
-      <div class="gallery-item filled">
-        <img src="PCB Exploded View.png" alt="ASTRA Kit PCB exploded view">
-        <div class="image-label">PCB Exploded View.png</div>
+        <div class="gallery-item filled reveal">
+          <img src="COMMS PCB LAYOUT.png" alt="ASTRA Kit communications PCB layout">
+          <div class="image-label">COMMS PCB LAYOUT.png</div>
+        </div>
+        <div class="gallery-item filled reveal">
+          <img src="OBC PCB LAYOUT.png" alt="ASTRA Kit onboard computer PCB layout">
+          <div class="image-label">OBC PCB LAYOUT.png</div>
+        </div>
+        <div class="gallery-item filled reveal">
+          <img src="PCB Exploded View.png" alt="ASTRA Kit PCB exploded view">
+          <div class="image-label">PCB Exploded View.png</div>
+        </div>
       </div>
     </div>
 
     <!-- Web Dashboard Section -->
     <div class="gallery-section">
-      <h3 class="category-header">Web Dashboard</h3>
-      <p class="category-description">ASTRA Dashboard for visualization of sensor data, housekeeping telemetry, and real-time processes of a working unit of ASTRA Kit.</p>
+      <h3 class="category-header reveal">Web Dashboard</h3>
+      <p class="category-description reveal">ASTRA Dashboard for visualization of sensor data, housekeeping telemetry, and real-time processes of a working unit of ASTRA Kit.</p>
       <div class="gallery-grid">
-        <div class="gallery-item filled">
-          <img src="Camera Tab 1.png" alt="ASTRA Dashboard camera tab interface">
+        <div class="gallery-item filled reveal">
+          <img src="Camera 1 Tab.png" alt="ASTRA Dashboard camera tab interface">
           <div class="image-label">Camera Tab 1.png</div>
         </div>
-        <div class="gallery-item filled">
+        <div class="gallery-item filled reveal">
           <img src="Welcome Screen.png" alt="ASTRA Dashboard welcome screen">
           <div class="image-label">Welcome Screen.png</div>
         </div>
       </div>
+    </div>
 
     <!-- Documentation Section -->
     <div class="gallery-section">
-      <h3 class="category-header">Documentation</h3>
-      <p class="category-description">Student and instructor manuals for the ASTRA Kit satellite learning platform.</p>
+      <h3 class="category-header reveal">Documentation</h3>
+      <p class="category-description reveal">Student and instructor manuals for the ASTRA Kit satellite learning platform.</p>
       <div class="gallery-grid">
-      <div class="gallery-item filled">
-        <img src="Kit Manual Student's Version.jpg" alt="ASTRA Kit student manual cover">
-        <div class="image-label">Kit Manual Student's Version.jpg</div>
-      </div>
-      <div class="gallery-item filled">
-        <img src="Kit Manual Instructors Reference.jpg" alt="ASTRA Kit instructor reference manual cover">
-        <div class="image-label">Kit Manual Instructors Reference.jpg</div>
-      </div>
-      <div class="gallery-item filled">
-        <img src="ACTUAL MANUAL PAGE.png" alt="ASTRA Kit manual sample page">
-        <div class="image-label">ACTUAL MANUAL PAGE.png</div>
-      </div>
-      <div class="gallery-item filled">
-        <img src="ACTUAL MANUAL PAGE 1.png" alt="ASTRA Kit manual sample page 2">
-        <div class="image-label">ACTUAL MANUAL PAGE 1.png</div>
+        <div class="gallery-item filled reveal">
+          <img src="Kit Manual Student's Version.jpg" alt="ASTRA Kit student manual cover">
+          <div class="image-label">Kit Manual Student's Version.jpg</div>
+        </div>
+        <div class="gallery-item filled reveal">
+          <img src="Kit Manual Instructors Reference.jpg" alt="ASTRA Kit instructor reference manual cover">
+          <div class="image-label">Kit Manual Instructors Reference.jpg</div>
+        </div>
+        <div class="gallery-item filled reveal">
+          <img src="ACTUAL MANUAL PAGE.png" alt="ASTRA Kit manual sample page">
+          <div class="image-label">ACTUAL MANUAL PAGE.png</div>
+        </div>
+        <div class="gallery-item filled reveal">
+          <img src="ACTUAL MANUAL PAGE 1.png" alt="ASTRA Kit manual sample page 2">
+          <div class="image-label">ACTUAL MANUAL PAGE 1.png</div>
+        </div>
       </div>
     </div>
 
     <!-- Project Development Section -->
     <div class="gallery-section">
-      <h3 class="category-header">Project Development</h3>
-      <p class="category-description">Team collaboration and development process throughout the one-year project timeline.</p>
+      <h3 class="category-header reveal">Project Development</h3>
+      <p class="category-description reveal">Team collaboration and development process throughout the one-year project timeline.</p>
       <div class="gallery-grid">
-      <div class="gallery-item filled">
-        <img src="D1.png" alt="ASTRA Kit development — team collaboration">
-        <div class="image-label">D1.png</div>
-      </div>
-      <div class="gallery-item filled">
-        <img src="D2.png" alt="ASTRA Kit development — assembly session">
-        <div class="image-label">D2.png</div>
-      </div>
-      <div class="gallery-item filled">
-        <img src="D3.png" alt="ASTRA Kit development — testing phase">
-        <div class="image-label">D3.png</div>
-      </div>
-      <div class="gallery-item filled">
-        <img src="D4.png" alt="ASTRA Kit development — final presentation">
-        <div class="image-label">D4.png</div>
+        <div class="gallery-item filled reveal">
+          <img src="D1.png" alt="ASTRA Kit development — team collaboration">
+          <div class="image-label">D1.png</div>
+        </div>
+        <div class="gallery-item filled reveal">
+          <img src="D2.png" alt="ASTRA Kit development — assembly session">
+          <div class="image-label">D2.png</div>
+        </div>
+        <div class="gallery-item filled reveal">
+          <img src="D3.png" alt="ASTRA Kit development — testing phase">
+          <div class="image-label">D3.png</div>
+        </div>
+        <div class="gallery-item filled reveal">
+          <img src="D4.png" alt="ASTRA Kit development — final presentation">
+          <div class="image-label">D4.png</div>
+        </div>
       </div>
     </div>
   </div>
@@ -356,6 +380,19 @@
       closeLightbox();
     }
   });
+
+  // ── SCROLL REVEAL ────────────────────────────────────────────
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  revealEls.forEach(el => revealObserver.observe(el));
 </script>
 
 </body>
